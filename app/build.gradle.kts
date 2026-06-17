@@ -40,6 +40,15 @@ android {
 }
 
 dependencies {
+    // Retrofit：网络请求核心库
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    // Gson 转换器：将网络返回的 JSON 数据自动转为 Kotlin 对象
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    // ViewModel：管理 UI 状态
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.0")
+    // Lifecycle：用于处理与生命周期相关的任务
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.0")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

@@ -20,6 +20,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -28,7 +29,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import au.edu.jcu.cp3406_cp5307_utilityappstartertemplate.ui.theme.CP3406_CP5603UtilityAppStarterTemplateTheme
+import au.edu.jcu.cp3406_cp5307_utilityappstartertemplate.viewmodel.MainViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,8 +85,8 @@ fun UtilityApp() {
 }
 
 @Composable
-fun UtilityScreen() {
-    var counter by remember { mutableIntStateOf(0) }
+fun UtilityScreen(viewModel: MainViewModel = viewModel()) { // 使用注入的 ViewModel
+    val rates by viewModel.rates.collectAsState() // 观察数据变化
 
     Column(
         modifier = Modifier
@@ -91,14 +94,10 @@ fun UtilityScreen() {
             .padding(24.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Text("Utility Screen", style = MaterialTheme.typography.headlineMedium)
-        Text("Counter: $counter", style = MaterialTheme.typography.bodyLarge)
-
-        Button(onClick = { counter++ }) {
-            Text("Increment")
+        Text("当前汇率: ${rates["EUR"]}") // 展示数据
         }
-    }
 }
+
 
 @Composable
 fun SettingsScreen() {
