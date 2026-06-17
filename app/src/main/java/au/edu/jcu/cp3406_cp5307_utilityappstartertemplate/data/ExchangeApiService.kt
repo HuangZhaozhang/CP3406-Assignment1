@@ -1,6 +1,8 @@
 package au.edu.jcu.cp3406_cp5307_utilityappstartertemplate.data
 import retrofit2.http.GET
+import retrofit2.http.Path
 interface ExchangeApiService {
-    @GET("latest?base=USD") // 示例路径，请根据所选 API 修改
-    suspend fun getRates(): ExchangeRateResponse
+    // 假设使用 ExchangeRate-API，需替换为你申请的 API Key
+    @GET("v6/YOUR_API_KEY/latest/{base}")
+    suspend fun getLatestRates(@Path("base") base: String): ExchangeRateResponse
 }

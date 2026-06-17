@@ -30,8 +30,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import au.edu.jcu.cp3406_cp5307_utilityappstartertemplate.data.ExchangeRepository
+import au.edu.jcu.cp3406_cp5307_utilityappstartertemplate.data.RetrofitInstance
 import au.edu.jcu.cp3406_cp5307_utilityappstartertemplate.ui.theme.CP3406_CP5603UtilityAppStarterTemplateTheme
 import au.edu.jcu.cp3406_cp5307_utilityappstartertemplate.viewmodel.MainViewModel
+import au.edu.jcu.cp3406_cp5307_utilityappstartertemplate.viewmodel.MyViewModelFactory
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,17 +88,22 @@ fun UtilityApp() {
 }
 
 @Composable
-fun UtilityScreen(viewModel: MainViewModel = viewModel()) { // 使用注入的 ViewModel
-    val rates by viewModel.rates.collectAsState() // 观察数据变化
+fun UtilityScreen(
+    // 使用 viewModel() 函数自动获取实例 (确保添加了 lifecycle-viewmodel-compose 依赖)
+    viewModel: MainViewModel = androidx.lifecycle.viewmodel.compose.viewModel(
+        factory = MyViewModelFactory(ExchangeRepository(RetrofitInstance.api))
+    )
+) {
+    // 观察数据变化
+    val rates by viewModel.rates.collectAsState()
+    Column(modifier = Modifier.padding(24.dp)) {
+        Text("当前美元对其他货币汇率", style = MaterialTheme.typography.headlineSmall)
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(24.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        Text("当前汇率: ${rates["EUR"]}") // 展示数据
+        // 简单展示列表
+        rates.forEach { (currency, rate) ->
+            Text("$currency: $rate")
         }
+    }
 }
 
 
