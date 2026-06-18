@@ -29,6 +29,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import au.edu.jcu.cp3406_cp5307_utilityappstartertemplate.data.ExchangeRepository
 import au.edu.jcu.cp3406_cp5307_utilityappstartertemplate.data.RetrofitInstance
@@ -89,19 +90,33 @@ fun UtilityApp() {
 
 @Composable
 fun UtilityScreen(
-    // 使用 viewModel() 函数自动获取实例 (确保添加了 lifecycle-viewmodel-compose 依赖)
-    viewModel: MainViewModel = androidx.lifecycle.viewmodel.compose.viewModel(
+    // 注入 ViewModel
+    viewModel: MainViewModel = viewModel(
         factory = MyViewModelFactory(ExchangeRepository(RetrofitInstance.api))
     )
 ) {
-    // 观察数据变化
-    val rates by viewModel.rates.collectAsState()
-    Column(modifier = Modifier.padding(24.dp)) {
-        Text("当前美元对其他货币汇率", style = MaterialTheme.typography.headlineSmall)
+    // 使用 collectAsStateWithLifecycle 观察数据变化（这是观察 StateFlow 的最佳实践）
+    val rates by viewModel.rates.collectAsStateWithLifecycle()
+    val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
 
-        // 简单展示列表
-        rates.forEach { (currency, rate) ->
-            Text("$currency: $rate")
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(24.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        Text("汇率转换器", style = MaterialTheme.typography.headlineMedium)
+
+        if (isLoading) {
+            Text("正在加载汇率...")
+        } else {
+            // 这里将硬编码替换为 API 返回的动态数据
+            Text("基础货币: USD", style = MaterialTheme.typography.bodyLarge)
+
+            // 简单的列表展示
+            rates.forEach { (currency, rate) ->
+                Text("$currency: $rate", style = MaterialTheme.typography.bodyMedium)
+            }
         }
     }
 }
