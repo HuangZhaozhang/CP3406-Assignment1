@@ -1,55 +1,72 @@
-# Utility App Starter – CP3406 / CP5307
+# GlobalRate - Multi-language Currency Converter (CP3406/CP5307)
 
-This is a basic Android app template for **Assessment 1: Utility App** in CP3406/CP5603..  
-It provides the structure for a simple tabular UI using **Jetpack Compose** and **Material Design 3**.
+This is a functional Android utility application developed for **Assessment 1: Utility App** in CP3406/CP5307.
+It has evolved from a basic template into a real-time currency
 
----
-
-## Getting Started
-
-### How to Run
-1. Clone or download this repo  
-2. Open in Android Studio  
-3. Run on an emulator or physical device (API 26+ recommended)  
 
 ---
 
-## Composables
+# GlobalRate - Multi-language Currency Converter (CP3406 / CP5307)
 
-### UtilityApp()
-- Contains the screen layout using a Scaffold
-- Toggles content between Utility and Settings
+This is a functional Android utility application developed for **Assessment 1: Utility App** in CP3406/CP5307.
+It has evolved from a basic template into a real-time currency converter featuring modern Android development practices.
 
-### UtilityScreen()
-- Displays a simple counter (replace with your utility logic)  
-- Includes a button to increment the counter
+---
 
-### SettingsScreen()
-- Placeholder for user preferences or configuration  
-- Can be extended to modify main screen behavior (e.g., theme, units, limits)  
+## Key Features
+
+- **Real-time Conversion**: Fetches the latest exchange rates for over 100+ global currencies using a REST API.
+- **Interactive Search**: Enhanced currency selectors allow users to type and filter currency codes (e.g., USD, SGD, CNY) for quick access.
+- **Theme Switching**: Built-in support for **Dark Mode** and **Light Mode**, accessible via the settings menu.
+- **Bilingual Support**: Fully localized interface with a toggle to switch between **English** and **Simplified Chinese**.
+- **Modern UI**: Built entirely with **Jetpack Compose** and **Material Design 3**.
+
+---
+
+## Tech Stack & Architecture
+
+- **Architecture**: MVVM (Model-View-ViewModel) to ensure clean separation of concerns.
+- **Networking**: **Retrofit** and **Gson** for fetching and parsing live exchange rate data.
+- **State Management**: **StateFlow** and **Coroutines** for reactive UI updates and asynchronous operations.
+- **UI Components**: Material3 Scaffold, NavigationBar, ExposedDropdownMenu, and dynamic theme switching.
 
 ---
 
 ## Key Concepts Covered
 
-| Week | Concept                        | Used In                          |
-|------|--------------------------------|----------------------------------|
-| 1    | Kotlin + Android Studio         | MainActivity.kt |
-| 2    | Jetpack Compose Layouts         | UtilityApp(), UtilityScreen(), SettingsScreen()   |
-| 3    | Material Design 3               | CP3406_CP5603UtilityAppStarterTemplateTheme, MaterialTheme.typography |
-| 4    | ViewModel | Not included in starter          |
-| 5    | Retrofit  | Not included in starter          |
+| Week | Concept                        | Implementation Status | Used In |
+|------|--------------------------------|-----------------------|---------|
+| 1    | Kotlin + Android Studio        | ✅ Completed           | MainActivity.kt, Data Classes |
+| 2    | Jetpack Compose Layouts        | ✅ Completed           | UtilityScreen, SettingsScreen |
+| 3    | Material Design 3              | ✅ Completed           | Theme.kt, Custom UI Components |
+| 4    | ViewModel & State Management   | ✅ Completed           | MainViewModel, SettingsViewModel |
+| 5    | Retrofit & API Integration     | ✅ Completed           | RetrofitInstance, ExchangeApiService |
 
 ---
 
-## Suggested Extensions
-- Replace counter with a real utility (e.g., hydration tracker, timer)  
-- Add a ViewModel for state management  
-- Use SharedPreferences or DataStore to persist settings  
-- Add a simple API call using Retrofit (e.g., fetch weather or quotes)  
+## Getting Started
+
+### Prerequisites
+- Android Studio Ladybug (or newer)
+- Active Internet connection (to fetch real-time rates)
+
+### How to Run
+1. Clone this repository to your local machine.
+2. Open the project in Android Studio.
+3. Sync Gradle and run the app on an emulator or physical device (API 26+).
+
+---
+
+## Data Source & Credits
+Exchange rate data is provided by [ExchangeRate-API](https://www.exchangerate-api.com).  
+This project was extended from the CP3406 Utility App Starter Template.
+
+---
+
+## Self-Reflection Summary
+This project demonstrated the power of the MVVM architecture in managing complex UI states (like currency conversion and localization). A key challenge addressed was implementing robust data parsing and Null-Safety when handling external JSON responses, ensuring the app remains stable even during network or data inconsistencies.
 
 ---
 
 ## 📚 License
-This template is provided for educational use in CP3406.  
-Feel free to modify and extend it for your assessment.
+This project is developed for educational use in CP3406/CP5307 at James Cook University.
